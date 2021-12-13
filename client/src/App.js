@@ -1,23 +1,32 @@
-import logo from './logo.svg';
 import './App.css';
+import Login from './pages/login';
+import AlertState from './context/Alert/alertState';
+import Alerts from './components/Alert';
+import NoFound from './pages/NoFound';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Register from './pages/register';
+import PrivateRoute from './utils/privateRoute';
+import AuthState from './context/auth/AuthState';
+import Loading from './components/Loading';
+
 function App() {
   return (
-    <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className='App-link'
-          href='https://reactjs.org'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthState>
+      <AlertState>
+        <div className='unselectable'>
+          <Router>
+            <Alerts />
+            <Loading />
+            <Routes>
+              <Route path='/' element={<PrivateRoute component={Register} />} />
+              <Route path='register' element={<Register />} />
+              <Route path='login' element={<Login />} />
+              <Route path='*' element={<NoFound />} />
+            </Routes>
+          </Router>
+        </div>
+      </AlertState>
+    </AuthState>
   );
 }
 
