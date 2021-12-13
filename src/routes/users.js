@@ -1,14 +1,14 @@
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
-const UserRepo = require("../repos/user-repo");
+const UserRepo = require('../repos/user-repo');
 
-router.get("/users", async (req, res) => {
+router.get('/api/users', async (req, res) => {
   const user = await UserRepo.find();
   res.send(user);
 });
 
-router.get("/users/:id", async (req, res) => {
+router.get('/api/users/:id', async (req, res) => {
   const { id } = req.params;
   const user = await UserRepo.findById(id);
   if (user) {
@@ -18,7 +18,7 @@ router.get("/users/:id", async (req, res) => {
   }
 });
 
-router.post("/users", async (req, res) => {
+router.post('/api/users', async (req, res) => {
   const { username, bio } = req.body;
   const user = await UserRepo.insert(username, bio);
   if (user) {
@@ -28,7 +28,7 @@ router.post("/users", async (req, res) => {
   }
 });
 
-router.put("/users/:id", async (req, res) => {
+router.put('/api/users/:id', async (req, res) => {
   const { id } = req.params;
   const { username, bio } = req.body;
   const user = await UserRepo.update(id, username, bio);
@@ -39,7 +39,7 @@ router.put("/users/:id", async (req, res) => {
   }
 });
 
-router.delete("/users/:id", async (req, res) => {
+router.delete('/api/users/:id', async (req, res) => {
   const { id } = req.params;
   const user = await UserRepo.delete(id);
   if (user) {
