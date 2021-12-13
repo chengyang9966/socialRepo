@@ -18,12 +18,11 @@ const AlertState = (props) => {
       type: SET_ALERT,
       payload: { msg, type, id }
     });
-
+    if (cb) {
+      cb();
+    }
     setTimeout(() => {
       dispatch({ type: REMOVE_ALERT, payload: id });
-      if (cb) {
-        cb();
-      }
     }, timeout);
   };
   const removeAlert = () => {

@@ -8,6 +8,7 @@ import { faLongArrowAltRight } from '@fortawesome/free-solid-svg-icons';
 import setAuthToken from '../utils/setAuthToken';
 
 import Tilt from 'react-parallax-tilt';
+
 const Login = () => {
   const navigate = useNavigate();
 
@@ -17,6 +18,7 @@ const Login = () => {
     Email: '',
     Password: ''
   });
+
   onchange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
   };

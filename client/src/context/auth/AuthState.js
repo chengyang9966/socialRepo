@@ -12,6 +12,7 @@ import {
   RESET_PASSWORD_FAIL,
   LOADING
 } from '../types';
+import API, { METHODS } from '../../utils/api';
 
 // Create a custom hook to use the auth context
 
@@ -27,7 +28,7 @@ export const useAuth = () => {
 // Load User
 export const loadUser = async (dispatch) => {
   try {
-    const res = await axios.get('/api/auth');
+    const res = await API({ url: '/api/auth', method: METHODS.GET });
 
     dispatch({
       type: USER_LOADED,
@@ -48,8 +49,6 @@ export const resetPassword = async (dispatch, formData) => {
       type: RESET_PASSWORD_SUCCESS,
       payload: res.data.msg
     });
-
-    // loadUser(dispatch);
   } catch (err) {
     let errArr = err.response.data.errors;
     if (Array.isArray(errArr) && errArr.length > 0) {
@@ -95,9 +94,11 @@ const AuthState = (props) => {
   setAuthToken(state.token);
 
   // load user on first run or refresh
-  if (state.refresh) {
-    loadUser(dispatch);
-  }
+  useEffect(() => {
+    if (state.refresh) {
+      loadUser(dispatch);
+    }
+  }, [state.refresh]);
 
   // 'watch' state.token and set headers and local storage on any change
   useEffect(() => {
