@@ -3,8 +3,9 @@ const router = express.Router();
 const bcrypt = require('bcryptjs');
 const UserRepo = require('../repos/user-repo');
 const jwt = require('jsonwebtoken');
+const auth = require('../middleware/auth');
 require('dotenv').config({ path: '../.env' });
-
+const config = require('config');
 router.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
   const user = await UserRepo.findByEmailOrUserName(email);
@@ -23,7 +24,7 @@ router.post('/api/login', async (req, res) => {
   };
   jwt.sign(
     payload,
-    process.env.jwtSecret,
+    process.env.jwtSecret ? process.env.jwtSecret : config.get('jwtSecret'),
     {
       expiresIn: 360000
     },
@@ -32,6 +33,10 @@ router.post('/api/login', async (req, res) => {
       res.json({ token, msg: 'Sign In Successfully' });
     }
   );
+});
+
+router.get('/api/auth', auth, (req, res) => {
+  res.json({ msg: 'Valid Credentials' });
 });
 
 module.exports = router;
