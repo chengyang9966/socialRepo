@@ -1,6 +1,6 @@
-const app = require("./src/app.js");
-const pool = require("./src/pool");
-require("dotenv").config();
+const app = require('./src/app.js');
+const pool = require('./src/pool');
+require('dotenv').config();
 
 pool
   .connect({
@@ -8,7 +8,7 @@ pool
     port: process.env.DB_PORT,
     database: process.env.DB_DATABASE,
     user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
+    password: process.env.DB_PASSWORD
   })
   .then(() => {
     app().listen(process.env.PORT, () =>

@@ -38,7 +38,7 @@ export const loadUser = async (dispatch) => {
     dispatch({ type: AUTH_ERROR });
   }
 };
-
+export const AuthUser = () => {};
 // Reset User password
 export const resetPassword = async (dispatch, formData) => {
   try {
@@ -92,21 +92,22 @@ const AuthState = (props) => {
 
   // set token on initial app loading
   setAuthToken(state.token);
-
   // load user on first run or refresh
+
   useEffect(() => {
-    if (state.refresh) {
+    let isLoaded = false;
+    if (!isLoaded && state.refresh) {
       loadUser(dispatch);
     }
+    return () => (isLoaded = true);
   }, [state.refresh]);
-
   // 'watch' state.token and set headers and local storage on any change
   useEffect(() => {
-    setAuthToken(state.token);
+    if (state.token) setAuthToken(state.token);
   }, [state.token]);
 
   return (
-    <AuthContext.Provider value={{ state: state, dispatch }}>
+    <AuthContext.Provider value={{ state, dispatch }}>
       {props.children}
     </AuthContext.Provider>
   );

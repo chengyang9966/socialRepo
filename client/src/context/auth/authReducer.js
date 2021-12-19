@@ -17,7 +17,8 @@ const authReducer = (state, action) => {
     case LOADING:
       return {
         ...state,
-        loading: true
+        loading: true,
+        refresh: false
       };
     case USER_LOADED:
       return {
@@ -64,7 +65,8 @@ const authReducer = (state, action) => {
       return {
         ...state,
         error: null,
-        successMsg: null
+        successMsg: null,
+        refresh: false
       };
     default:
       throw new Error(`Unsupported type of: ${action.type}`);

@@ -1,4 +1,4 @@
-const pg = require("pg");
+const pg = require('pg');
 
 class Pool {
   _pool = null;

@@ -27,7 +27,7 @@ function Input({
       <input
         name={name}
         value={value}
-        type={view ? view : type}
+        type={view ? 'text' : type}
         placeholder={placeholder}
         className='input100'
         required

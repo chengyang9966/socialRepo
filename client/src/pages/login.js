@@ -1,4 +1,4 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import Input from '../components/input';
 import API, { METHODS } from '../utils/api';
 import AlertContext from '../context/Alert/alertContext';
@@ -14,6 +14,7 @@ const Login = () => {
 
   const alertContext = useContext(AlertContext);
   const { setAlert } = alertContext;
+
   const [user, setUser] = useState({
     Email: '',
     Password: ''
@@ -48,7 +49,7 @@ const Login = () => {
         } else {
           setAuthToken(result.token);
           setAlert(result.msg, 'success', () => {
-            navigate('/');
+            navigate('/protected/home');
           });
         }
       });
@@ -68,28 +69,31 @@ const Login = () => {
           </Tilt>
 
           <form className='login100-form validate-form' onSubmit={onSubmit}>
-            <span class='login100-form-title'>Member Login</span>
-            {InputArray.map((w) => {
-              return Input({
-                name: w.name,
-                placeholder: w.name,
-                type: w.type,
-                value: user[w.name],
-                onchange: onchange
-              });
+            <span className='login100-form-title'>Member Login</span>
+            {InputArray.map((w, i) => {
+              return (
+                <Input
+                  key={`${w}${i}`}
+                  name={w.name}
+                  placeholder={w.name}
+                  type={w.type}
+                  value={user[w.name]}
+                  onchange={onchange}
+                />
+              );
             })}
             <div className='container-login100-form-btn'>
               <button className='login100-form-btn'>Login</button>
             </div>
-            <div class='text-center p-t-12'>
-              <span class='txt1'>Forgot </span>
-              <a class='txt2' href='#'>
+            <div className='text-center p-t-12'>
+              <span className='txt1'>Forgot </span>
+              <a className='txt2' href='#'>
                 Username / Password?
               </a>
             </div>
 
-            <div class='text-center p-t-136'>
-              <a class='txt2' href='/register'>
+            <div className='text-center p-t-136'>
+              <a className='txt2' href='/register'>
                 Create your Account
                 <FontAwesomeIcon
                   aria-hidden='true'

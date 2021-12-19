@@ -72,16 +72,20 @@ const Register = () => {
             style={{ width: '100%' }}
             onSubmit={onSubmit}
           >
-            <span class='login100-form-title'>Register</span>
-            {InputArray.map((w) => {
-              return Input({
-                name: w.name,
-                placeholder: w.name,
-                type: w.type,
-                value: user[w.name],
-                onchange: onchange
-              });
+            <span className='login100-form-title'>Register</span>
+            {InputArray.map((w, i) => {
+              return (
+                <Input
+                  key={`${w}${i}`}
+                  name={w.name}
+                  placeholder={w.name}
+                  type={w.type}
+                  value={user[w.name]}
+                  onchange={onchange}
+                />
+              );
             })}
+
             <div className='container-login100-form-btn'>
               <button className='login100-form-btn'>Register</button>
             </div>

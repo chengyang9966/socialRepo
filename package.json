@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "server": " SUPPRESS_NO_CONFIG_WARNING nodemon server.js",
+    "server": "nodemon server.js",
     "migrate": "node-pg-migrate",
     "client": "npm start --prefix client",
     "clientinstall": "npm install --prefix client",

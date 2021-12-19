@@ -5,10 +5,10 @@ import Alerts from './components/Alert';
 import NoFound from './pages/NoFound';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Register from './pages/register';
-import PrivateRoute from './utils/privateRoute';
 import AuthState from './context/auth/AuthState';
 import Loading from './components/Loading';
-import Home from './pages/home';
+import RequireAuth from './utils/RequireAuth';
+import PrivateRoute from './pages/private';
 
 function App() {
   return (
@@ -19,15 +19,23 @@ function App() {
             <Alerts />
             <Loading />
             <Routes>
-              <Route path='/' element={<PrivateRoute component={Home} />} />
-              <Route
-                path='register'
-                element={<PrivateRoute component={Register} />}
-              />
-              <Route
-                path='login'
-                element={<PrivateRoute component={Login} />}
-              />
+              <Route path='/' element={<Login />} />
+
+              <Route path='/register' element={<Register />} />
+              <Route path='/protected'>
+                {PrivateRoute().map(({ path, children }) => {
+                  return (
+                    <Route
+                      key={path}
+                      path={path}
+                      element={
+                        <RequireAuth redirectTo='/'>{children}</RequireAuth>
+                      }
+                    />
+                  );
+                })}
+              </Route>
+
               <Route path='*' element={<NoFound />} />
             </Routes>
           </Router>

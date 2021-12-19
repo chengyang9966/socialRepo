@@ -1,10 +1,12 @@
-import React from 'react';
-import { useAuth } from '../context/auth/AuthState';
+import React, { useContext } from 'react';
+import AuthContext from '../context/auth/authContext';
+
 import Spinner from './Spinner';
 
 function Loading() {
-  const [authState] = useAuth();
-  const { loading } = authState;
+  const { state: auth } = useContext(AuthContext);
+
+  const { loading } = auth;
   return loading ? <Spinner /> : null;
 }
 
