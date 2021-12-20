@@ -19,7 +19,7 @@ router.post('/api/login', async (req, res) => {
   }
   const payload = {
     user: {
-      id: user.id
+      id: user.Id
     }
   };
   jwt.sign(
@@ -30,7 +30,7 @@ router.post('/api/login', async (req, res) => {
     },
     (err, token) => {
       if (err) throw err;
-      res.json({ token, msg: 'Sign In Successfully' });
+      res.json({ id: user.Id, token, msg: 'Sign In Successfully' });
     }
   );
 });
