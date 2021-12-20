@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import qs from 'querystring';
 export const METHODS = {
   GET: 'get',
   POST: 'post',
@@ -14,7 +14,10 @@ const API = async ({ url, method = METHODS.GET, params, data }) => {
     url: url,
     method: method,
     params: params,
-    data: data
+    data: data,
+    paramsSerializer: function (params) {
+      return qs.stringify(params);
+    }
   })
     .then((res) => {
       result = res.data;

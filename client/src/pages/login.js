@@ -48,8 +48,9 @@ const Login = () => {
           setAlert(result.error, 'danger');
         } else {
           setAuthToken(result.token);
+          localStorage.setItem('userId', result.id);
           setAlert(result.msg, 'success', () => {
-            navigate('/protected/home');
+            navigate('/home');
           });
         }
       });

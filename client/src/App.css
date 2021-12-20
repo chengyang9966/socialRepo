@@ -496,6 +496,7 @@ iframe {
   max-width: 300px;
   border: none;
   border-radius: var(--border-radius);
+  z-index: 1000;
 }
 .alert > span {
   margin-left: 5px;

@@ -29,10 +29,12 @@ export const useAuth = () => {
 export const loadUser = async (dispatch) => {
   try {
     const res = await API({ url: '/api/auth', method: METHODS.GET });
+    if (res.error) {
+      dispatch({ type: AUTH_ERROR });
+    }
 
     dispatch({
-      type: USER_LOADED,
-      payload: res.data
+      type: USER_LOADED
     });
   } catch (err) {
     dispatch({ type: AUTH_ERROR });
@@ -89,11 +91,10 @@ const AuthState = (props) => {
   };
 
   const [state, dispatch] = useReducer(authReducer, initialState);
-
   // set token on initial app loading
   setAuthToken(state.token);
-  // load user on first run or refresh
 
+  // load user on first run or refresh
   useEffect(() => {
     let isLoaded = false;
     if (!isLoaded && state.refresh) {
